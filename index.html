@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSentry: Mechanism of Operation</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Set default font to Inter and apply light theme */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light Slate */
+            color: #1e293b; /* Dark Slate Text */
+        }
+        
+        /* Custom CSS for the Scroll Animation Effect */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+            transition-delay: var(--delay);
+            /* Add a slightly stronger default shadow */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        .scroll-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Styling for the Process Flow icons */
+        .flow-icon {
+            background-color: #0ea5e9; /* Sky 500 */
+            color: white;
+            padding: 1rem;
+            border-radius: 9999px; /* Full circle */
+            box-shadow: 0 0 0 10px rgba(14, 165, 233, 0.1); /* Subtle halo effect */
+        }
+        
+        /* Utility to ensure 16:9 aspect ratio for video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Hero Section -->
+    <div class="bg-white py-16 px-6 sm:px-10 lg:px-16 shadow-lg border-b-4 border-sky-500">
+        <header class="max-w-7xl mx-auto">
+            <h1 class="text-5xl sm:text-6xl font-extrabold text-sky-600 mb-3">
+                Operational Mechanism
+            </h1>
+            <p class="text-xl sm:text-2xl text-slate-500 font-light max-w-4xl">
+                The four-stage cycle: Sensing, Processing, Verdict, and Logging.
+            </p>
+        </header>
+    </div>
+
+    <main class="max-w-7xl mx-auto p-4 sm:p-8 lg:p-12">
+
+        <!-- Section 1: The Core Operational Cycle -->
+        <section id="cycle" class="mb-20">
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-700 mb-12 scroll-animate" style="--delay: 0s;">
+                1. The AquaSentry Four-Stage Cycle
+            </h2>
+
+            <!-- Flow Diagram (Responsive Grid) -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Stage 1: Sensing -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-sky-400 scroll-animate harm-card" style="--delay: 0.1s;">
+                    <div class="flow-icon mb-4 inline-flex">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 4a4 4 0 100-8 4 4 0 000 8z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-sky-600 mb-2">Stage 1: Acquire Data</h3>
+                    <p class="text-base text-slate-600">
+                        The device wakes from low-power sleep mode (default: hourly) and performs sequential readings from the submerged probes.
+                    </p>
+                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
+                        <li>**Inputs:** pH, TDS, Turbidity, Temperature.</li>
+                        <li>**Action:** Takes N=5 samples per sensor over 3 seconds.</li>
+                    </ul>
+                </div>
+                
+                <!-- Separator (Visual on Desktop/Tablet) -->
+                <div class="hidden lg:block"></div>
+
+                <!-- Stage 2: Processing -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-teal-400 scroll-animate harm-card" style="--delay: 0.25s;">
+                    <div class="flow-icon mb-4 inline-flex bg-teal-500">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-teal-600 mb-2">Stage 2: Filter & Process</h3>
+                    <p class="text-base text-slate-600">
+                        Raw sensor readings are analyzed to remove electrical noise and momentary spikes (e.g., from bubbles or debris).
+                    </p>
+                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
+                        <li>**Method:** Calculated median of N=5 samples to establish a stable reading.</li>
+                        <li>**Output:** Final, filtered values for all four parameters.</li>
+                    </ul>
+                </div>
+                
+                <!-- Separator (Visual on Desktop/Tablet) -->
+                <div class="hidden lg:block"></div>
+                
+                <!-- Stage 3: Verdict -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-red-400 scroll-animate harm-card" style="--delay: 0.4s;">
+                    <div class="flow-icon mb-4 inline-flex bg-red-500">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-600 mb-2">Stage 3: Decision Logic</h3>
+                    <p class="text-base text-slate-600">
+                        The filtered data is passed through a simple, conservative threshold matrix to determine the safety verdict.
+                    </p>
+                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
+                        <li>**Logic:** If all parameters (pH, TDS, Turbidity) are within WHO/local limits, the output is 'SAFE'.</li>
+                        <li>**Output:** One of three status codes (0=SAFE, 1=CAUTION, 2=UNSAFE).</li>
+                    </ul>
+                </div>
+
+                <!-- Separator (Visual on Desktop/Tablet) -->
+                <div class="hidden lg:block"></div>
+                
+                <!-- Stage 4: Output & Sleep -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-indigo-400 scroll-animate harm-card" style="--delay: 0.55s;">
+                    <div class="flow-icon mb-4 inline-flex">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-sky-600 mb-2">Stage 4: Log and Display</h3>
+                    <p class="text-base text-slate-600">
+                        The verdict and raw data are displayed instantly and saved to non-volatile storage. The system enters deep sleep.
+                    </p>
+                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
+                        <li>**Display:** OLED screen flashes the large verdict (e.g., 'SAFE').</li>
+                        <li>**Logging:** Timestamp + all 5 data points saved to microSD card.</li>
+                        <li>**Power:** Enters deep sleep for power conservation.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: AI-Generated Process Demonstration Video -->
+        <section id="demonstration" class="mb-20 pt-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-700 mb-8 border-b-4 border-sky-600 pb-3 scroll-animate" style="--delay: 0s;">
+                2. Process Demonstration (Video Walkthrough)
+            </h2>
+            
+            <p class="text-lg text-slate-500 mb-6 max-w-4xl scroll-animate" style="--delay: 0.1s;">
+                This short video provides a quick, visual overview of the concept—demonstrating the smooth operation and clear output of the monitoring system in a dynamic environment.
+            </p>
+
+            <div class="scroll-animate" style="--delay: 0.2s;">
+                <!-- Responsive YouTube Video Embed -->
+                <div class="video-container rounded-xl shadow-2xl overflow-hidden">
+                    <!-- The short URL needs to be converted to the embed URL format -->
+                    <iframe 
+                        src="https://www.youtube.com/embed/SUsTqckP-7g" 
+                        title="AquaSentry Process Demonstration" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <p class="text-center text-sm text-slate-500 italic mt-4">
+                    Video Source: https://youtube.com/shorts/SUsTqckP-7g
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: The Verdict Logic Deep Dive -->
+        <section id="logic_deep_dive" class="pt-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-700 mb-8 border-b-4 border-sky-600 pb-3 scroll-animate" style="--delay: 0s;">
+                3. The Verdict Algorithm (The Brains)
+            </h2>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-2 scroll-animate" style="--delay: 0.1s;">
+                    <p class="text-lg text-slate-600 mb-6">
+                        The decision-making is designed to be **conservative and simple**, prioritizing public health over perfect precision. The device operates on a **traffic-light system** based on pre-set thresholds derived from WHO guidelines and local standards.
+                    </p>
+
+                    <table class="w-full text-left border-collapse rounded-xl overflow-hidden shadow-lg">
+                        <thead class="bg-sky-600 text-white">
+                            <tr>
+                                <th class="p-3">Parameter</th>
+                                <th class="p-3">Threshold Range (SAFE)</th>
+                                <th class="p-3">Functionality</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white text-slate-700">
+                            <tr class="border-b border-slate-200 hover:bg-sky-50 transition duration-150">
+                                <td class="p-3 font-semibold">pH Level</td>
+                                <td class="p-3">6.5 - 8.5</td>
+                                <td class="p-3">Checks for acidity/alkalinity balance.</td>
+                            </tr>
+                            <tr class="border-b border-slate-200 hover:bg-sky-50 transition duration-150">
+                                <td class="p-3 font-semibold">TDS (Total Dissolved Solids)</td>
+                                <td class="p-3">&lt; 300 ppm</td>
+                                <td class="p-3">Measures overall mineral/contaminant load.</td>
+                            </tr>
+                            <tr class="hover:bg-sky-50 transition duration-150">
+                                <td class="p-3 font-semibold">Turbidity</td>
+                                <td class="p-3">&lt; 5 NTU</td>
+                                <td class="p-3">Measures cloudiness/suspended solids.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="lg:col-span-1 bg-sky-50 p-6 rounded-2xl border-l-4 border-sky-500 shadow-lg scroll-animate" style="--delay: 0.2s;">
+                    <h4 class="text-xl font-bold text-sky-700 mb-3">Final Verdict Mapping</h4>
+                    <ul class="space-y-3 text-base">
+                        <li class="flex items-center"><span class="text-2xl mr-3">🟢</span> <span class="font-bold">SAFE:</span> All parameters pass. Use as normal.</li>
+                        <li class="flex items-center"><span class="text-2xl mr-3">🟡</span> <span class="font-bold">CAUTION:</span> One minor parameter (e.g., pH slightly off) fails. Suitable for washing/non-consumption.</li>
+                        <li class="flex items-center"><span class="text-2xl mr-3">🔴</span> <span class="font-bold">UNSAFE:</span> High TDS or Turbidity. Stop use immediately and contact local team.</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white text-slate-500 py-6 mt-12 border-t border-sky-200">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm">
+            AquaSentry Mechanism of Operation - Optimized for Simplicity and Reliability
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for Intersection Observer (Scroll Animation)
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.scroll-animate');
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        // Optionally, stop observing once it has animated to save resources
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            elements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+  </html>
+  
