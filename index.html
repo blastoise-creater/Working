@@ -3,232 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaSentry: Mechanism of Operation</title>
+    <title>AquaSentry: Frozen Protocol Mechanism - Final Form</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Using Orbitron for titles and Inter for body text -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Set default font to Inter and apply light theme */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Light Slate */
-            color: #1e293b; /* Dark Slate Text */
-        }
-        
-        /* Custom CSS for the Scroll Animation Effect */
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
-            transition-delay: var(--delay);
-            /* Add a slightly stronger default shadow */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        /* --- [FINAL FORM] Icy Core & Dark Energy Theme --- */
+        :root {
+            --bg-deep-dark: #02040a; /* Pure Black-Blue */
+            --bg-frozen-glass: rgba(10, 20, 35, 0.8); /* Darker "Black Ice" */
+            --color-electric-cyan: #00E4FF; /* Brighter Primary Accent */
+            --color-ice-white: #F0FBFF; /* Primary Text Color */
+            --color-secondary-blue: #B3E5FC; /* Secondary Text/Detail */
+            
+            /* Multi-layer, aggressive shadows for 3D/Crystal effect */
+            --shadow-ice-shatter: 
+                0 0 10px rgba(0, 228, 255, 0.7), /* Bright Inner Glow */
+                0 20px 45px rgba(0, 0, 0, 0.9),  /* Deep Drop Shadow */
+                inset 0 0 15px rgba(255, 255, 255, 0.08); /* Subtle Inner Frosted Light */
+
+            --border-fractal: 1px solid rgba(0, 228, 255, 0.4);
         }
 
+        /* --- Global Background, Typography, and "AURORA" Animation --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep-dark);
+            color: var(--color-ice-white);
+            overflow-x: hidden; /* Prevent ALL horizontal scroll */
+            position: relative;
+        }
+        
+        /* The "Northern Lights" / "Aurora" animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(45deg, #02040a 0%, #0a192f 25%, #02040a 50%, #102B48 75%, #02040a 100%);
+            background-size: 400% 400%;
+            animation: aurora-flow 30s linear infinite;
+            z-index: -2;
+            opacity: 0.8;
+        }
+
+        /* "Static Grid" Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient(circle at center, #102B48 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes aurora-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Typography: Orbitron for titles, with frozen glow --- */
+        .futuristic-title {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px var(--color-electric-cyan), 0 0 25px rgba(0, 228, 255, 0.6);
+        }
+
+        /* --- Crystalline Card with "GLINT" Hover Effect --- */
+        .crystalline-card {
+            background: var(--bg-frozen-glass);
+            backdrop-filter: blur(25px) saturate(200%); /* Stronger blur */
+            border: var(--border-fractal);
+            border-radius: 6px;
+            box-shadow: var(--shadow-ice-shatter);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+            transform-style: preserve-3d; 
+            position: relative;
+            overflow: hidden; /* CRITICAL: To contain the glint */
+        }
+        
+        /* The "Glint" pseudo-element */
+        .crystalline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%; /* Start off-screen */
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1;
+        }
+
+        .crystalline-card:hover {
+            transform: perspective(1200px) rotateX(2deg) rotateY(-2deg) scale(1.03); 
+            box-shadow: 0 0 35px var(--color-electric-cyan), 0 25px 50px rgba(0, 0, 0, 1);
+        }
+        
+        /* Animate the "Glint" on hover */
+        .crystalline-card:hover::before {
+            left: 150%; /* Slide across and off-screen */
+        }
+        
+        /* --- "Energy Pulse" Section Headers --- */
+        .pulsing-header {
+            position: relative;
+            border-bottom-width: 3px;
+            border-color: rgba(0, 228, 255, 0.4);
+        }
+        .pulsing-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; /* Align with border */
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--color-electric-cyan);
+            box-shadow: 0 0 15px var(--color-electric-cyan);
+            animation: pulse-scan 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-scan {
+            0% { opacity: 0.2; width: 0%; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; width: 100%; }
+        }
+
+        /* --- Flow Indicator Styling (Desktop/Smartboard Only) --- */
+        @media (min-width: 1024px) {
+            .flow-card:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: -2.75rem; 
+                width: 2.5rem;
+                height: 3px; 
+                background: linear-gradient(to right, var(--color-electric-cyan), #38BDF8);
+                box-shadow: 0 0 10px var(--color-electric-cyan);
+                transform: translateY(-50%);
+                z-index: 5;
+            }
+            .flow-card:not(:last-child)::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: -0.9rem; 
+                width: 0;
+                height: 0;
+                border-top: 6px solid transparent; 
+                border-bottom: 6px solid transparent;
+                border-left: 10px solid var(--color-electric-cyan);
+                transform: translateY(-50%);
+                z-index: 10;
+            }
+        }
+        
+        /* --- Scroll Animation --- */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1.5s cubic-bezier(0.2, 0.5, 0.3, 1), transform 1.5s cubic-bezier(0.2, 0.5, 0.3, 1);
+            transition-delay: var(--delay);
+        }
         .scroll-animate.animate-in {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Styling for the Process Flow icons */
+        /* --- Icon styling: More dramatic pulse --- */
         .flow-icon {
-            background-color: #0ea5e9; /* Sky 500 */
-            color: white;
+            background: linear-gradient(145deg, #00E4FF, #00AACC);
+            color: var(--bg-deep-dark);
             padding: 1rem;
-            border-radius: 9999px; /* Full circle */
-            box-shadow: 0 0 0 10px rgba(14, 165, 233, 0.1); /* Subtle halo effect */
+            border-radius: 50%;
+            box-shadow: 0 0 0 10px rgba(0, 228, 255, 0.1), 0 0 25px #00E4FF;
+            animation: pulse-ice 2.5s infinite ease-in-out;
         }
-        
-        /* Utility to ensure 16:9 aspect ratio for video */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
+
+        @keyframes pulse-ice {
+            0% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 228, 255, 0.1), 0 0 12px #00E4FF; }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(0, 228, 255, 0.3), 0 0 35px #00E4FF; }
+            100% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 228, 255, 0.1), 0 0 12px #00E4FF; }
         }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+
+        /* Keyframe for system status light */
+        @keyframes status-blink {
+            0% { opacity: 0.5; box-shadow: 0 0 8px #64FFDA; }
+            100% { opacity: 1; box-shadow: 0 0 15px #64FFDA; }
         }
+
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header / Hero Section -->
-    <div class="bg-white py-16 px-6 sm:px-10 lg:px-16 shadow-lg border-b-4 border-sky-500">
+    <div class="py-16 px-4 sm:px-6 lg:px-16 shadow-2xl" style="background: linear-gradient(180deg, #071320 0%, #102B48 100%); border-bottom: 4px solid var(--color-electric-cyan);">
         <header class="max-w-7xl mx-auto">
-            <h1 class="text-5xl sm:text-6xl font-extrabold text-sky-600 mb-3">
-                Operational Mechanism
+             <div class="flex items-center mb-4 text-sm font-semibold futuristic-title" style="color: #64FFDA;">
+                <span class="w-3 h-3 rounded-full mr-2" style="background-color: #64FFDA; animation: status-blink 1.5s infinite alternate;"></span>
+                AQUASENTRY PROTOCOL // FROZEN CORE ENGAGED
+            </div>
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold futuristic-title" style="color: var(--color-electric-cyan);">
+                OPERATIONAL MECHANISM
             </h1>
-            <p class="text-xl sm:text-2xl text-slate-500 font-light max-w-4xl">
-                The four-stage cycle: Sensing, Processing, Verdict, and Logging.
+            <p class="text-xl sm:text-3xl font-light max-w-5xl mt-4" style="color: var(--color-secondary-blue);">
+                The four-stage protocol: Sensing, Processing, Verdict, and System Logging.
             </p>
         </header>
     </div>
 
+    <!-- Main content container with max-width -->
     <main class="max-w-7xl mx-auto p-4 sm:p-8 lg:p-12">
 
         <!-- Section 1: The Core Operational Cycle -->
-        <section id="cycle" class="mb-20">
-            <h2 class="text-3xl sm:text-4xl font-bold text-slate-700 mb-12 scroll-animate" style="--delay: 0s;">
-                1. The AquaSentry Four-Stage Cycle
+        <section id="cycle" class="mb-24">
+            <h2 class="text-3xl sm:text-5xl font-bold mb-12 futuristic-title pulsing-header pb-4 scroll-animate" 
+                style="--delay: 0s; color: var(--color-ice-white);">
+                1. THE AQUASENTRY 4-STAGE DATAFLOW ARCHITECTURE
             </h2>
 
-            <!-- Flow Diagram (Responsive Grid) -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Flow Diagram (Highly Responsive Grid - Grid of 4 columns on large screens) -->
+            <div class="grid lg:grid-cols-4 gap-x-10 gap-y-12">
                 
                 <!-- Stage 1: Sensing -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-sky-400 scroll-animate harm-card" style="--delay: 0.1s;">
+                <div class="flow-card crystalline-card p-6 h-full scroll-animate" style="--delay: 0.1s; border-left: 5px solid #00E4FF;">
                     <div class="flow-icon mb-4 inline-flex">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 4a4 4 0 100-8 4 4 0 000 8z"></path></svg>
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 4a4 4 0 100-8 4 4 0 000 8z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-sky-600 mb-2">Stage 1: Acquire Data</h3>
-                    <p class="text-base text-slate-600">
-                        The device wakes from low-power sleep mode (default: hourly) and performs sequential readings from the submerged probes.
+                    <h3 class="text-xl font-bold mb-2 futuristic-title z-10 relative" style="color: var(--color-electric-cyan);">STAGE 1: ACQUIRE DATA</h3>
+                    <p class="text-base z-10 relative" style="color: var(--color-secondary-blue);">
+                        The device initializes and performs sequential readings from submerged probes.
                     </p>
-                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
-                        <li>**Inputs:** pH, TDS, Turbidity, Temperature.</li>
-                        <li>**Action:** Takes N=5 samples per sensor over 3 seconds.</li>
+                    <ul class="text-sm mt-3 space-y-1 z-10 relative" style="color: var(--color-ice-white);">
+                        <li><span class="text-cyan-400 font-bold">Input Matrix:</span> pH, TDS, Turbidity, Temp.</li>
+                        <li><span class="text-cyan-400 font-bold">Action:</span> Takes **N=5** samples over **3s** for redundancy.</li>
                     </ul>
                 </div>
                 
-                <!-- Separator (Visual on Desktop/Tablet) -->
-                <div class="hidden lg:block"></div>
-
                 <!-- Stage 2: Processing -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-teal-400 scroll-animate harm-card" style="--delay: 0.25s;">
-                    <div class="flow-icon mb-4 inline-flex bg-teal-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <div class="flow-card crystalline-card p-6 h-full scroll-animate" style="--delay: 0.3s; border-left: 5px solid #64FFDA;">
+                    <div class="flow-icon mb-4 inline-flex" style="background: linear-gradient(145deg, #64FFDA, #00AACC);">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-teal-600 mb-2">Stage 2: Filter & Process</h3>
-                    <p class="text-base text-slate-600">
-                        Raw sensor readings are analyzed to remove electrical noise and momentary spikes (e.g., from bubbles or debris).
+                    <h3 class="text-xl font-bold mb-2 futuristic-title z-10 relative" style="color: var(--color-electric-cyan);">STAGE 2: FILTER & PROCESS</h3>
+                    <p class="text-base z-10 relative" style="color: var(--color-secondary-blue);">
+                        Raw sensor readings are refined to eliminate noise and spurious data spikes.
                     </p>
-                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
-                        <li>**Method:** Calculated median of N=5 samples to establish a stable reading.</li>
-                        <li>**Output:** Final, filtered values for all four parameters.</li>
+                    <ul class="text-sm mt-3 space-y-1 z-10 relative" style="color: var(--color-ice-white);">
+                        <li><span class="text-cyan-400 font-bold">Method:</span> Calculates the **Median(N=5)** for a stable reading.</li>
+                        <li><span class="text-cyan-400 font-bold">Output:</span> Clean data vector for decision logic.</li>
                     </ul>
                 </div>
-                
-                <!-- Separator (Visual on Desktop/Tablet) -->
-                <div class="hidden lg:block"></div>
                 
                 <!-- Stage 3: Verdict -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-red-400 scroll-animate harm-card" style="--delay: 0.4s;">
-                    <div class="flow-icon mb-4 inline-flex bg-red-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class="flow-card crystalline-card p-6 h-full scroll-animate" style="--delay: 0.5s; border-left: 5px solid #FF55AA;">
+                    <div class="flow-icon mb-4 inline-flex" style="background: linear-gradient(145deg, #FF55AA, #CC0055);">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-red-600 mb-2">Stage 3: Decision Logic</h3>
-                    <p class="text-base text-slate-600">
-                        The filtered data is passed through a simple, conservative threshold matrix to determine the safety verdict.
+                    <h3 class="text-xl font-bold mb-2 futuristic-title z-10 relative" style="color: var(--color-electric-cyan);">STAGE 3: VERDICT LOGIC</h3>
+                    <p class="text-base z-10 relative" style="color: var(--color-secondary-blue);">
+                        Filtered data is passed through a simple, conservative threshold matrix for safety determination.
                     </p>
-                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
-                        <li>**Logic:** If all parameters (pH, TDS, Turbidity) are within WHO/local limits, the output is 'SAFE'.</li>
-                        <li>**Output:** One of three status codes (0=SAFE, 1=CAUTION, 2=UNSAFE).</li>
+                    <ul class="text-sm mt-3 space-y-1 z-10 relative" style="color: var(--color-ice-white);">
+                        <li><span class="text-cyan-400 font-bold">Logic:</span> Compares against **WHO/Local** safe limits.</li>
+                        <li><span class="text-cyan-400 font-bold">Output:</span> Status code (0: SAFE, 1: CAUTION, 2: UNSAFE).</li>
                     </ul>
                 </div>
 
-                <!-- Separator (Visual on Desktop/Tablet) -->
-                <div class="hidden lg:block"></div>
-                
                 <!-- Stage 4: Output & Sleep -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl border-t-4 border-indigo-400 scroll-animate harm-card" style="--delay: 0.55s;">
-                    <div class="flow-icon mb-4 inline-flex">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <div class="flow-card crystalline-card p-6 h-full scroll-animate" style="--delay: 0.7s; border-left: 5px solid #AAAAFF;">
+                    <div class="flow-icon mb-4 inline-flex" style="background: linear-gradient(145deg, #AAAAFF, #8888FF);">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-sky-600 mb-2">Stage 4: Log and Display</h3>
-                    <p class="text-base text-slate-600">
-                        The verdict and raw data are displayed instantly and saved to non-volatile storage. The system enters deep sleep.
+                    <h3 class="text-xl font-bold mb-2 futuristic-title z-10 relative" style="color: var(--color-electric-cyan);">STAGE 4: LOG & SLEEP</h3>
+                    <p class="text-base z-10 relative" style="color: var(--color-secondary-blue);">
+                        The final verdict and raw data are recorded, and the system powers down to conserve energy.
                     </p>
-                    <ul class="text-sm mt-3 space-y-1 text-slate-500">
-                        <li>**Display:** OLED screen flashes the large verdict (e.g., 'SAFE').</li>
-                        <li>**Logging:** Timestamp + all 5 data points saved to microSD card.</li>
-                        <li>**Power:** Enters deep sleep for power conservation.</li>
+                    <ul class="text-sm mt-3 space-y-1 z-10 relative" style="color: var(--color-ice-white);">
+                        <li><span class="text-cyan-400 font-bold">Output:</span> OLED Display + MicroSD Log.</li>
+                        <li><span class="text-cyan-400 font-bold">Power State:</span> Enters **deep sleep** for efficiency.</li>
                     </ul>
                 </div>
             </div>
+            
+            <!-- Mobile Flow Divider -->
+            <div class="lg:hidden mt-8 text-center space-y-4">
+                 <div class="w-0.5 h-10 mx-auto" style="background-color: var(--color-electric-cyan); box-shadow: 0 0 7px var(--color-electric-cyan);"></div>
+                 <svg class="w-5 h-5 mx-auto" style="color: var(--color-electric-cyan);" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v5a1 1 0 102 0V7z" clip-rule="evenodd"></path></svg>
+            </div>
         </section>
         
-        <!-- Section 2: AI-Generated Process Demonstration Video -->
-        <section id="demonstration" class="mb-20 pt-16">
-            <h2 class="text-3xl sm:text-4xl font-bold text-slate-700 mb-8 border-b-4 border-sky-600 pb-3 scroll-animate" style="--delay: 0s;">
-                2. Process Demonstration (Video Walkthrough)
+        <!-- Section 2: Video Walkthrough -->
+        <section id="demonstration" class="mb-24 pt-16">
+            <h2 class="text-3xl sm:text-5xl font-bold mb-8 futuristic-title pulsing-header pb-4 scroll-animate" 
+                style="--delay: 0s; color: var(--color-ice-white);">
+                2. VISUALIZATION // PROCESS WALKTHROUGH
             </h2>
             
-            <p class="text-lg text-slate-500 mb-6 max-w-4xl scroll-animate" style="--delay: 0.1s;">
-                This short video provides a quick, visual overview of the concept—demonstrating the smooth operation and clear output of the monitoring system in a dynamic environment.
+            <p class="text-lg sm:text-xl mb-6 max-w-4xl scroll-animate" style="--delay: 0.1s; color: var(--color-secondary-blue);">
+                A dynamic visual representation of the core mechanism, demonstrating the smooth transition from raw input to final output verdict.
             </p>
 
-            <div class="scroll-animate" style="--delay: 0.2s;">
+            <div class="scroll-animate crystalline-card p-4 lg:p-6" style="--delay: 0.2s;">
                 <!-- Responsive YouTube Video Embed -->
-                <div class="video-container rounded-xl shadow-2xl overflow-hidden">
-                    <!-- The short URL needs to be converted to the embed URL format -->
+                <div class="video-container rounded-lg overflow-hidden" style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                     <iframe 
                         src="https://www.youtube.com/embed/SUsTqckP-7g" 
                         title="AquaSentry Process Demonstration" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen
-                        loading="lazy">
+                        loading="lazy"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </iframe>
                 </div>
-                <p class="text-center text-sm text-slate-500 italic mt-4">
-                    Video Source: https://youtube.com/shorts/SUsTqckP-7g
+                <p class="text-center text-sm italic mt-4 z-10 relative" style="color: var(--color-secondary-blue);">
+                    DATA STREAM: https://youtube.com/shorts/SUsTqckP-7g
                 </p>
             </div>
         </section>
 
         <!-- Section 3: The Verdict Logic Deep Dive -->
         <section id="logic_deep_dive" class="pt-16">
-            <h2 class="text-3xl sm:text-4xl font-bold text-slate-700 mb-8 border-b-4 border-sky-600 pb-3 scroll-animate" style="--delay: 0s;">
-                3. The Verdict Algorithm (The Brains)
+            <h2 class="text-3xl sm:text-5xl font-bold mb-8 futuristic-title pulsing-header pb-4 scroll-animate" 
+                style="--delay: 0s; color: var(--color-ice-white);">
+                3. VERDICT MATRIX // CONSERVATIVE THRESHOLDS
             </h2>
             
-            <div class="grid lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
+                <!-- *** TABLE GLITCH FIX HERE *** -->
+                <!-- The table is now wrapped in a div with "overflow-x-auto" -->
                 <div class="lg:col-span-2 scroll-animate" style="--delay: 0.1s;">
-                    <p class="text-lg text-slate-600 mb-6">
-                        The decision-making is designed to be **conservative and simple**, prioritizing public health over perfect precision. The device operates on a **traffic-light system** based on pre-set thresholds derived from WHO guidelines and local standards.
+                    <p class="text-lg sm:text-xl mb-6" style="color: var(--color-secondary-blue);">
+                        The decision logic is based on a **conservative matrix** to ensure the highest standard of public safety, using pre-set thresholds from international standards.
                     </p>
 
-                    <table class="w-full text-left border-collapse rounded-xl overflow-hidden shadow-lg">
-                        <thead class="bg-sky-600 text-white">
-                            <tr>
-                                <th class="p-3">Parameter</th>
-                                <th class="p-3">Threshold Range (SAFE)</th>
-                                <th class="p-3">Functionality</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white text-slate-700">
-                            <tr class="border-b border-slate-200 hover:bg-sky-50 transition duration-150">
-                                <td class="p-3 font-semibold">pH Level</td>
-                                <td class="p-3">6.5 - 8.5</td>
-                                <td class="p-3">Checks for acidity/alkalinity balance.</td>
-                            </tr>
-                            <tr class="border-b border-slate-200 hover:bg-sky-50 transition duration-150">
-                                <td class="p-3 font-semibold">TDS (Total Dissolved Solids)</td>
-                                <td class="p-3">&lt; 300 ppm</td>
-                                <td class="p-3">Measures overall mineral/contaminant load.</td>
-                            </tr>
-                            <tr class="hover:bg-sky-50 transition duration-150">
-                                <td class="p-3 font-semibold">Turbidity</td>
-                                <td class="p-3">&lt; 5 NTU</td>
-                                <td class="p-3">Measures cloudiness/suspended solids.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- This wrapper div fixes the horizontal overflow (box error) on mobile -->
+                    <div class="w-full overflow-x-auto rounded-lg" style="border: var(--border-fractal); box-shadow: 0 0 20px rgba(0, 228, 255, 0.3);">
+                        <table class="w-full min-w-[600px] text-left border-collapse">
+                            <thead class="text-white futuristic-title" style="background-color: #0F335A; border-bottom: 3px solid var(--color-electric-cyan);">
+                                <tr>
+                                    <th class="p-4">PARAMETER</th>
+                                    <th class="p-4">SAFE RANGE</th>
+                                    <th class="p-4">FUNCTIONALITY</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background-color: rgba(20, 40, 70, 0.95);">
+                                <tr class="border-b" style="border-color: rgba(0, 228, 255, 0.2);">
+                                    <td class="p-4 font-extrabold" style="color: var(--color-electric-cyan);">pH Level</td>
+                                    <td class="p-4 font-mono" style="color: #64FFDA;">**6.5 to 8.5**</td>
+                                    <td class="p-4" style="color: var(--color-secondary-blue);">Acidity/Alkalinity Balance.</td>
+                                </tr>
+                                <tr class="border-b" style="border-color: rgba(0, 228, 255, 0.2);">
+                                    <td class="p-4 font-extrabold" style="color: var(--color-electric-cyan);">TDS (Dissolved Solids)</td>
+                                    <td class="p-4 font-mono" style="color: #64FFDA;">&lt; **300 ppm**</td>
+                                    <td class="p-4" style="color: var(--color-secondary-blue);">Overall mineral/contaminant load.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 font-extrabold" style="color: var(--color-electric-cyan);">Turbidity</td>
+                                    <td class="p-4 font-mono" style="color: #64FFDA;">&lt; **5 NTU**</td>
+                                    <td class="p-4" style="color: var(--color-secondary-blue);">Suspended solids/cloudiness factor.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
-                <div class="lg:col-span-1 bg-sky-50 p-6 rounded-2xl border-l-4 border-sky-500 shadow-lg scroll-animate" style="--delay: 0.2s;">
-                    <h4 class="text-xl font-bold text-sky-700 mb-3">Final Verdict Mapping</h4>
-                    <ul class="space-y-3 text-base">
-                        <li class="flex items-center"><span class="text-2xl mr-3">🟢</span> <span class="font-bold">SAFE:</span> All parameters pass. Use as normal.</li>
-                        <li class="flex items-center"><span class="text-2xl mr-3">🟡</span> <span class="font-bold">CAUTION:</span> One minor parameter (e.g., pH slightly off) fails. Suitable for washing/non-consumption.</li>
-                        <li class="flex items-center"><span class="text-2xl mr-3">🔴</span> <span class="font-bold">UNSAFE:</span> High TDS or Turbidity. Stop use immediately and contact local team.</li>
+                <!-- This is the second "box", which was never broken, but now matches the new theme -->
+                <div class="lg:col-span-1 crystalline-card p-6 border-l-4 scroll-animate" style="--delay: 0.2s; border-color: var(--color-electric-cyan);">
+                    <h4 class="text-xl font-bold mb-3 futuristic-title z-10 relative" style="color: var(--color-electric-cyan);">OUTPUT STATUS CODES</h4>
+                    <ul class="space-y-4 text-base z-10 relative" style="color: var(--color-ice-white);">
+                        <li class="flex items-center"><span class="text-4xl mr-3 font-mono" style="color: #64FFDA;">[ 0 ]</span> <span class="font-bold">SAFE:</span> All checks clear. Standard use authorized.</li>
+                        <li class="flex items-center"><span class="text-4xl mr-3 font-mono" style="color: #FFD700;">[ 1 ]</span> <span class="font-bold">CAUTION:</span> Minor threshold breach. Non-critical use only.</li>
+                        <li class="flex items-center"><span class="text-4xl mr-3 font-mono" style="color: #FF55AA;">[ 2 ]</span> <span class="font-bold">UNSAFE:</span> Critical parameter failure. **IMMEDIATE** shutdown.</li>
                     </ul>
                 </div>
                 
@@ -237,9 +394,9 @@
 
     </main>
 
-    <footer class="bg-white text-slate-500 py-6 mt-12 border-t border-sky-200">
-        <div class="max-w-7xl mx-auto px-4 text-center text-sm">
-            AquaSentry Mechanism of Operation - Optimized for Simplicity and Reliability
+    <footer class="py-8 mt-20 border-t" style="background-color: #020910; border-color: rgba(0, 228, 255, 0.5); box-shadow: 0 -5px 30px rgba(0, 228, 255, 0.3);">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm sm:text-base futuristic-title" style="color: var(--color-secondary-blue);">
+            AQUASENTRY // FROZEN CORE // SYSTEM ONLINE
         </div>
     </footer>
 
@@ -252,13 +409,13 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate-in');
-                        // Optionally, stop observing once it has animated to save resources
-                        // observer.unobserve(entry.target);
+                        // Stop observing once animated
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
                 rootMargin: '0px',
-                threshold: 0.1 // Trigger when 10% of the element is visible
+                threshold: 0.1 
             });
 
             elements.forEach(el => {
@@ -267,5 +424,6 @@
         });
     </script>
 </body>
-  </html>
-  
+</html>
+
+
